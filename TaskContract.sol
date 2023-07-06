@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 contract TaskContract {
     struct Task {
@@ -13,31 +13,36 @@ contract TaskContract {
 
     uint nextTaskId = 0;
 
-    function createTask(string memory _title, string memory _description) public {
-       tasks.push(Task({
-           description: _description,
-           id: nextTaskId++,
-           title: _title
-       }));
+    function createTask(
+        string memory _title,
+        string memory _description
+    ) public {
+        tasks.push(
+            Task({description: _description, id: nextTaskId++, title: _title})
+        );
     }
 
-    function getTasks(uint _taskId) public view returns (string memory, uint, string memory) {
+    function getTasks(
+        uint _taskId
+    ) public view returns (string memory, uint, string memory) {
         uint index = findIndex(_taskId);
 
-        return (tasks[index].description,tasks[index].id,tasks[index].title);
+        return (tasks[index].description, tasks[index].id, tasks[index].title);
     }
 
     function findIndex(uint _id) internal view returns (uint) {
-        for(uint i; i < tasks.length; i++) {
-            if(tasks[i].id == _id) return i;
+        for (uint i; i < tasks.length; i++) {
+            if (tasks[i].id == _id) return i;
         }
-
 
         revert("Task not found");
     }
 
-
-    function updateTask(uint _taskId, string memory _title, string memory _description) public {
+    function updateTask(
+        uint _taskId,
+        string memory _title,
+        string memory _description
+    ) public {
         uint index = findIndex(_taskId);
 
         tasks[index].title = _title;
